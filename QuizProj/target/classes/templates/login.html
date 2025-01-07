@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Login Page</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        /* Styling similar to the index page */
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #FFF9E6;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        
+        .form-container {
+            background: #fff;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 400px;
+        }
+        
+        .form-container h1 {
+            font-size: 2em;
+            color: #FF8C00;
+            margin-bottom: 20px;
+        }
+        
+        .form-container input {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+        
+        .form-container button {
+            background-color: #FF8C00;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            padding: 10px 20px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .form-container button:hover {
+            background-color: #FFA500;
+        }
+        
+        .error {
+            color: red;
+            margin: 10px 0;
+            font-size: 1em;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="form-container">
+        <h1>Login</h1>
+        <form action="/login" method="post">
+            <div>
+                <label for="username" style="font-size: 0.9em;">Username:</label><br>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div>
+                <label for="password" style="font-size: 0.9em;">Password:</label><br>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div>
+                <button type="submit">Login</button>
+            </div>
+            <!-- Display error message dynamically using Thymeleaf -->
+            <p class="error" th:if="${error}" th:text="${error}"></p>
+        </form>
+    </div>
+</body>
+
+</html>

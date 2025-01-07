@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        
+        form {
+            max-width: 400px;
+            margin: auto;
+        }
+        
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+        
+        input,
+        select,
+        button {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+        }
+        
+        .error {
+            color: red;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Registration Form</h1>
+    <form id="registrationForm" onsubmit="return validateForm()">
+        <label for="userName">User Name</label>
+        <input type="text" id="userName" name="userName" placeholder="First Last">
+        <div id="nameError" class="error"></div>
+
+        <label>Gender</label>
+        <input type="radio" id="male" name="gender" value="Male">
+        <label for="male">Male</label>
+        <input type="radio" id="female" name="gender" value="Female">
+        <label for="female">Female</label>
+        <div id="genderError" class="error"></div>
+
+        <label for="dob">Date of Birth</label>
+        <input type="date" id="dob" name="dob">
+        <div id="dobError" class="error"></div>
+
+        <label for="state">State</label>
+        <select id="state" name="state">
+            <option value="">Select a state</option>
+            <option value="State1">State1</option>
+            <option value="State2">State2</option>
+            <option value="State3">State3</option>
+            <option value="State4">State4</option>
+            <option value="State5">State5</option>
+        </select>
+        <div id="stateError" class="error"></div>
+
+        <label for="pinCode">Pin Code</label>
+        <input type="text" id="pinCode" name="pinCode" maxlength="6">
+        <div id="pinError" class="error"></div>
+
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email">
+        <div id="emailError" class="error"></div>
+
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password">
+        <div id="passwordError" class="error"></div>
+
+        <label for="confirmPassword">Confirm Password</label>
+        <input type="password" id="confirmPassword" name="confirmPassword">
+        <div id="confirmPasswordError" class="error"></div>
+
+        <button type="submit">Register</button>
+    </form>
+
+    <script>
+        function validateForm() {
+            let isValid = true;
+
+            // Clear previous errors
+            document.querySelectorAll('.error').forEach(error => error.textContent = '');
+
+            // User Name validation
+            const userName = document.getElementById('userName').value.trim();
+            if (!/^[a-zA-Z]+\s[a-zA-Z]+$/.test(userName)) {
+                document.getElementById('nameError').textContent = 'Enter first and last name (letters only).';
+                isValid = false;
+            }
+
+            // Gender validation
+            const gender = document.querySelector('input[name="gender"]:checked');
+            if (!gender) {
+                document.getElementById('genderError').textContent = 'Select your gender.';
+                isValid = false;
+            }
+
+            // Date of Birth validation
+            const dob = document.getElementById('dob').value;
+            if (!dob) {
+                document.getElementById('dobError').textContent = 'Select your date of birth.';
+                isValid = false;
+            }
+
+            // State validation
+            const state = document.getElementById('state').value;
+            if (!state) {
+                document.getElementById('stateError').textContent = 'Select a state.';
+                isValid = false;
+            }
+
+            // Pin Code validation
+            const pinCode = document.getElementById('pinCode').value;
+            if (!/^\d{6}$/.test(pinCode)) {
+                document.getElementById('pinError').textContent = 'Enter a valid 6-digit pin code.';
+                isValid = false;
+            }
+
+            // Email validation
+            const email = document.getElementById('email').value.trim();
+            if (!/^\S+@\S+\.\S+$/.test(email)) {
+                document.getElementById('emailError').textContent = 'Enter a valid email address.';
+                isValid = false;
+            }
+
+            // Password validation
+            const password = document.getElementById('password').value;
+            if (password.length < 4) {
+                document.getElementById('passwordError').textContent = 'Password must be at least 4 characters.';
+                isValid = false;
+            }
+
+            // Confirm Password validation
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            if (confirmPassword !== password) {
+                document.getElementById('confirmPasswordError').textContent = 'Passwords do not match.';
+                isValid = false;
+            }
+
+            return isValid;
+        }
+    </script>
+</body>
+
+</html>

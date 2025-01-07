@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Landing Page</title>
+    <!-- Google Font for modern typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- For FontAwesome icons -->
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #FFF9E6;
+            color: #333333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .container {
+            width: 60%;
+            padding: 30px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            z-index: 1;
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            color: #FF8C00;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        
+        p {
+            font-size: 1.2em;
+            color: #555555;
+            margin-bottom: 40px;
+        }
+        
+        .button {
+            padding: 15px 30px;
+            margin: 10px;
+            font-size: 1.1em;
+            cursor: pointer;
+            background-color: #FF8C00;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            display: inline-block;
+            width: 200px;
+        }
+        
+        .button:hover {
+            background-color: #FFA500;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+        
+        .button:focus {
+            outline: none;
+        }
+        
+        .logout-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: #FF8C00;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .logout-button:hover {
+            background-color: #FFA500;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+        
+        .logout-button i {
+            font-size: 1.2em;
+        }
+        
+        .logout-button:focus {
+            outline: none;
+        }
+        /* For responsiveness */
+        
+        @media (max-width: 768px) {
+            .container {
+                width: 80%;
+            }
+            h1 {
+                font-size: 2em;
+            }
+            .button {
+                width: 80%;
+                font-size: 1.2em;
+            }
+            .logout-button {
+                width: 40px;
+                height: 40px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Logout button in the top-right corner -->
+    <button class="logout-button" onclick="window.location.href='/logout'">
+        <i class="fas fa-power-off"></i>
+    </button>
+
+    <div class="container">
+        <h1>Welcome to the Quiz Application</h1>
+        <p>Choose an action:</p>
+
+        <button class="button" onclick="window.location.href='/createQuiz'">Create Quiz</button>
+        <button class="button" onclick="window.location.href='/quizPage'">Take Quiz</button>
+        <button class="button" onclick="window.location.href='/questionsPage'">Manage Questions</button>
+    </div>
+
+</body>
+
+</html>

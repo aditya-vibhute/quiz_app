@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Create Quiz</title>
+    <!-- Google Fonts for styling -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #FFF9E6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+        }
+        
+        .container {
+            width: 70%;
+            padding: 20px;
+            background-color: #FFF9E6;
+            text-align: center;
+        }
+        
+        h1 {
+            color: #333;
+        }
+        
+        .form-group {
+            margin: 15px 0;
+            text-align: left;
+        }
+        
+        .row {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .row .form-group {
+            flex: 1;
+        }
+        
+        label {
+            font-weight: 600;
+            display: block;
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+        
+        select,
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 1.1rem;
+        }
+        
+        input[type="number"] {
+            width: 100%;
+            padding: 7px;
+            /* Adjusted padding for height match */
+            margin-top: 5px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 1.1rem;
+        }
+        
+        #quizTitle {
+            text-align: center;
+            font-size: 1.2rem;
+            margin-right: 20;
+        }
+        
+        .button {
+            background-color: #c4411d;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 12px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s ease;
+        }
+        
+        .button:hover {
+            background-color: #45a049;
+        }
+        
+        .table-container {
+            margin-top: 30px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        table,
+        th,
+        td {
+            border: 1px solid #ddd;
+        }
+        
+        th,
+        td {
+            padding: 12px;
+            text-align: center;
+        }
+        
+        th {
+            background-color: #f1efac;
+        }
+        
+        .delete-button {
+            background-color: #c4411d;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        #landingButton {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: #FF8C00;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        #landingButton:hover {
+            background-color: #FFA500;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+        
+        #landingButton i {
+            font-size: 16px;
+            /* Adjust the size of the icon */
+        }
+    </style>
+</head>
+
+<body>
+
+    <button id="landingButton" onclick="window.location.href='/index'">
+        <i class="fas fa-home"></i>
+    </button>
+
+    <div class="container">
+        <h1>Create a New Quiz</h1>
+
+        <div class="row">
+            <div class="form-group">
+                <label for="categorySelect">Select Category</label>
+                <select id="categorySelect">
+                    <option value="Math">Math</option>
+                    <option value="Java">Java</option>
+                    <option value="Python">Python</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="numQuestions">Number of Questions</label>
+                <input type="number" id="numQuestions" min="1" max="10" value="5">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="quizTitle" style="font-size: 1.4rem;">Quiz Title</label>
+            <input type="text" id="quizTitle" placeholder="Enter quiz title" required>
+        </div>
+
+        <button class="button" onclick="createQuiz()">Create Quiz</button>
+
+        <!-- Quiz list table -->
+        <div class="table-container">
+            <h2>Available Quizzes</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Quiz ID</th>
+                        <th>Quiz Title</th>
+                        <th>Category</th>
+                        <th>Number of Questions</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="quizTableBody">
+                    <!-- Dynamic content populated by JavaScript -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Function to create a quiz
+        async function createQuiz() {
+            const category = document.getElementById('categorySelect').value;
+            const numQ = document.getElementById('numQuestions').value;
+            const title = document.getElementById('quizTitle').value;
+
+            if (!title) {
+                alert("Please enter a title for the quiz.");
+                return;
+            }
+
+            const response = await fetch('/quiz/create?category=' + category + '&numQ=' + numQ + '&title=' + title, {
+                method: 'POST'
+            });
+
+            if (response.ok) {
+                alert("Quiz created successfully!");
+                loadQuizzes(); // Refresh the quiz table
+            } else {
+                alert("Failed to create quiz. Please try again.");
+            }
+        }
+
+        // Function to delete a quiz
+        // Function to delete a quiz
+        async function deleteQuiz(quizId) {
+            console.log("Deleting quiz with ID:", quizId); // Debugging line
+
+            if (quizId === undefined || quizId === null) {
+                alert("Invalid quiz ID.");
+                return;
+            }
+
+            const response = await fetch(`/quiz/delete/${quizId}`, {
+                method: 'DELETE'
+            });
+
+            if (response.ok) {
+                alert("Quiz deleted successfully!");
+                loadQuizzes(); // Refresh the quiz table
+            } else {
+                alert("Failed to delete quiz. Please try again.");
+            }
+        }
+
+
+        // Function to load all quizzes and display in the table
+        async function loadQuizzes() {
+            try {
+                const response = await fetch('/quiz/getAll');
+                if (!response.ok) throw new Error("Failed to fetch quizzes");
+
+                const quizzes = await response.json();
+                const quizTableBody = document.getElementById('quizTableBody');
+                quizTableBody.innerHTML = ''; // Clear any previous data
+
+                quizzes.forEach(quiz => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${quiz.id}</td>
+                        <td>${quiz.title}</td>
+                        <td>${quiz.category}</td>
+                        <td>${quiz.numQ}</td>
+                        <td><button class="delete-button" onclick="deleteQuiz(${quiz.id})">Delete</button></td>
+                    `;
+                    quizTableBody.appendChild(row);
+                });
+
+            } catch (error) {
+                console.error("Error loading quizzes:", error);
+            }
+        }
+
+        // Load quizzes on page load
+        window.onload = loadQuizzes;
+    </script>
+
+</body>
+
+</html>
